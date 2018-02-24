@@ -1,0 +1,64 @@
+<!--用户管理页-->
+{% extends '../layout.html' %}
+
+{% block main %}
+
+<ol class="breadcrumb">
+    <li><a href="/admin">后台管理</a></li>
+    <li><span>用户列表</span></li>
+</ol>
+
+<h3>用户列表</h3>
+
+<table class="table table-hover table-striped">
+    <tr>
+        <th>ID</th>
+        <th>用户名</th>
+        <th>密码</th>
+        <th>管理员身份</th>
+    </tr>
+
+    {% for user in users %}
+    <tr>
+        <td>{{user._id.toString()}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.password}}</td>
+        <td>
+            {%if user.isAdmin%}
+            是管理员
+            {% else %}
+            不是管理员
+            {%endif%}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+<nav>
+    <ul class="pager">
+        <li class="previous">
+            {% if page <= 1 %}
+            <span>第一页</span>
+            {% else %}
+            <a href="/admin/user?page={{page-1}}">&larr; 上一页</a>
+            {% endif %}
+        </li>
+
+        {% if pages > 0 %}
+        <li>
+            共有 {{count}} 条数据，一共 {{pages}} 页，当前第 {{page}} 页
+        </li>
+        {% endif %}
+
+        <li class="next">
+            {% if page >= pages %}
+            <span>最后一页</span>
+            {% else %}
+            <a href="/admin/user?page={{page+1}}">下一页 &rarr;</a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+
+{% endblock %}

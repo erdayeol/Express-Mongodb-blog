@@ -1,0 +1,116 @@
+<!--前台页面-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mr.Liu 的个人网站</title>
+    <link href="/public/images/favicon.ico" rel="shortcut icon" />
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/public/fontAwesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/main.css">
+    <script src="/public/js/jquery-3.3.1.min.js"></script>
+    <script src="/public/js/index.js"></script>
+</head>
+
+<body>
+<!--头部图片-->
+<header class="intro-view">
+    <div class="intro-body-view">
+        <img src='/public/images/header-view.jpg' />
+    </div>
+</header>
+<!--导航条 -->
+<nav class="nav-header">
+    <div class="menu">
+
+        {% if category == '' %}
+        <a href="/" class="focus">首页</a>
+        {% else %}
+        <a href="/">首页</a>
+        {% endif %}
+
+        {% for sort in categories %}
+        {% if category == sort.id %}
+        <a href="/?category={{sort.id}}" class="focus">{{sort.name}}</a>
+        {% else %}
+        <a href="/?category={{sort.id}}">{{sort.name}}</a>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+</nav>
+<!--主体内容-->
+<main class="clear">
+    <!--主显示区-->
+    <div class="mainLeft">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+    <!--登录注册区-->
+    <div class="mainRight">
+
+        {% if userInfo._id %}
+        <div class="rightBox" id="userInfo">
+            <div class="title">
+                <span>用户信息</span>
+            </div>
+            <p><span class="colDark">{{userInfo.username}}</span></p>
+
+            {% if userInfo.isAdmin %}
+            <p><span class="colDanger">Hello，管理员！</span><a href="/admin">进入管理</a></p>
+            {% else %}
+            <p><span class="colDanger">Hi，欢迎光临我的个人网站！</span></p>
+            {% endif %}
+
+            <p><span class="colDark"><a href="javascript:;" id="logout">退出登录</a></span></p>
+        </div>
+        {% else %}
+        <div class="rightBox" id="loginBox">
+            <div class="title">
+                <span>登录</span>
+            </div>
+            <div class="line">
+                <span class="colDark">用户名：</span><input name="username" type="text"/>
+            </div>
+            <div class="line">
+                <span class="colDark">密码：</span><input name="password" type="password"/>
+            </div>
+            <div class="line">
+                <span class="colDark"></span>
+                <button>登 录</button>
+            </div>
+            <p class="textRight">还没注册？<a href="javascript:;" class="colMint">马上注册</a></p>
+            <p class="colWarning textCenter"></p>
+        </div>
+        <div class="rightBox" id="registerBox" style="display: none;">
+            <div class="title">
+                <span>注册</span>
+            </div>
+            <div class="line">
+                <span class="colDark">用户名：</span><input name="username" type="text"/>
+            </div>
+            <div class="line">
+                <span class="colDark">密码：</span><input name="password" type="password"/>
+            </div>
+            <div class="line">
+                <span class="colDark">确认：</span><input name="repassword" type="password"/>
+            </div>
+            <div class="line">
+                <span class="colDark"></span>
+                <button>注 册</button>
+            </div>
+            <p class="textRight">已有账号？<a href="javascript:;" class="colMint">马上登录</a></p>
+            <p class="colWarning textCenter"></p>
+        </div>
+        {% endif %}
+
+    </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!--首页及分类主显示区内容-->
+{% extends 'layout.html' %}
+
+{% block content %}
+
+{% if count > 0 %}
+    <!--文章列表-->
+    {% for content in contents %}
+    <div class="listBox">
+        <h1>{{content.title}}</h1>
+        <p class="colDefault">
+            时间：<span class="colInfo">{{content.addTime|date('Y-m-d H:i', -8*60)}} &nbsp;</span>
+            阅读：<span class="colInfo">{{content.views}} &nbsp;</span>
+            评论：<span class="colInfo">{{content.comments.length}}</span>
+       </p>
+        <dfn><p>{{content.description}}</p></dfn>
+       <div class="function"><a href="/view?contentid={{content.id}}">阅读全文</a></div>
+    </div>
+    {% endfor %}
+    <!--文章列表分页-->
+    <div class="pager">
+        <ul class="clear">
+           <li class="previous">
+               {% if page <= 1 %}
+               <span>第一页</span>
+               {% else %}
+               <a href="/?category={{category}}&page={{page-1}}">上一页</a>
+               {% endif %}
+           </li>
+
+           {% if pages > 0 %}
+           <li>
+               <strong>{{page}} / {{pages}}</strong>
+           </li>
+           {% endif %}
+
+            <li class="next">
+                {% if page >= pages %}
+                <span>最后一页</span>
+                {% else %}
+                <a href="/?category={{category}}&page={{page+1}}">下一页</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+{% else %}
+    <div class="listBox">
+        <p class="colDefault">该分类暂无文章</p>
+    </div>
+{% endif %}
+
+{% endblock %}

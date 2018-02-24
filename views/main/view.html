@@ -1,0 +1,50 @@
+<!--文章详情页主显示区内容-->
+
+{% extends 'layout-view.html' %}
+
+{% block content %}
+    <!--文章主要信息-->
+    <div class="listBox">
+        <h1>{{content.title}}</h1>
+        <p class="colDefault">
+            时间：<span class="colInfo">{{content.addTime|date('Y-m-d H:i', -8*60)}} &nbsp;</span>
+            阅读：<span class="colInfo">{{content.views}} &nbsp;</span>
+            评论：<span class="colInfo">{{content.comments.length}}</span>
+        </p>
+        <dfn>
+            {{content.content}}
+        </dfn>
+    </div>
+    <!--文章评论-->
+    <div class="listBox message">
+        <h3 class="textLeft"><strong>评论</strong> <span class="em">共有 <em id="messageCount"></em> 条评论</span></h3>
+        <input type="hidden" id="contentId" value="{{content.id}}">
+        {% if userInfo._id %}
+        <p class="textLeft">请发表您的评论：</p>
+        <p class="textLeft clear">
+            <textarea id="messageContent"></textarea>
+            <button id="messageBtn" class="submit">提交</button>
+        </p>
+        {% else %}
+        <p class="bgDanger" style="line-height: 30px;">请您先登录，再进行评论！</p>
+        {% endif %}
+
+        <div class="messageList">
+        </div>
+
+        <div class="pager">
+            <ul class="clear">
+                <li class="previous">
+                    <a href="">上一页</a>
+                </li>
+                <li></li>
+                <li class="next">
+                    <a href="">下一页</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+<script src="/public/js/comment.js"></script>
+{% endblock %}
